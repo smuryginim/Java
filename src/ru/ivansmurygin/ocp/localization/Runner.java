@@ -1,5 +1,8 @@
 package ru.ivansmurygin.ocp.localization;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -9,8 +12,45 @@ public class Runner {
     public static final String CURRENT_PACK = "ru.ivansmurygin.ocp.localization.resource_bundle";
 
     public static void main(String[] args) throws InterruptedException {
-        testBundleProperties();
+        dateFormat();
+    }
 
+    static void simpleDateFormat(){
+        Date currentDate = new Date();
+        Locale.setDefault(Locale.ENGLISH);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        System.out.println("Current format date is " + sdf.format(currentDate));
+    }
+
+    static void dateFormat(){
+        Locale.setDefault(Locale.CANADA);
+        Date dt = new Date();
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, Locale.CANADA);
+        DateFormat dfTime = DateFormat.getTimeInstance(DateFormat.FULL, Locale.CANADA);
+        DateFormat dfDateTime = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
+
+        System.out.println("Date format simple instance: \t" + dateFormat.format(dt));
+        System.out.println("Date format time instance \t" + dfTime.format(dt) );
+        System.out.println("Date format date time instance \t" + dfDateTime.format(dt) );
+    }
+
+    static void numberFormat(){
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.CHINESE);
+        NumberFormat nfCur = NumberFormat.getCurrencyInstance(Locale.CHINESE);
+        NumberFormat nfPer = NumberFormat.getPercentInstance(Locale.CHINESE);
+        System.out.printf("%10s \t %10s \t %15s \t %10s \t \n",
+                "Number", "Simple", "Cur Format", "Per Format");
+        Long digit = 10000000L;
+        System.out.printf("%10s \t %10s \t %10s \t %10s \t \n",
+                digit, numberFormat.format(digit), nfCur.format(digit), nfPer.format(digit));
+        System.out.println("Currency for locale is " + numberFormat.getCurrency().getSymbol());
+    }
+
+    public static void testCurrency(){
+        Locale indianLocale = new Locale.Builder().setRegion("IN").build();
+        Currency indCur = Currency.getInstance(indianLocale);
+        System.out.printf("Numeric code is %s and symbol is %s and currency Code is %s",
+                indCur.getNumericCode(), indCur.getSymbol(), indCur.getCurrencyCode());
     }
 
     public static void testBundleProperties(){
