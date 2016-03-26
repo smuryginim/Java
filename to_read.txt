@@ -1,0 +1,3 @@
+Hello!
+You use character stream to read me.
+Bye.
