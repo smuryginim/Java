@@ -9,13 +9,15 @@ import java.util.*;
 public class Runner {
 
     public static void main(String[] args) {
-        ReadWriteUtils.consoleExample();
+        objectStream();
     }
 
     public static void objectStream(){
-        BlogInfo blogInfo = new BlogInfo(7, "I\\O Fundamaentals", "Hidden description");
+        BlogInfo blogInfo = new BlogInfo(7, "I\\O Fundamaentals", "Hidden description", "static");
         try {
+            System.out.println("Start serialization....");
             SerializationUtil.serialize(blogInfo, "info.txt");
+            System.out.println("Start deserialization....");
             BlogInfo newInfo = (BlogInfo) SerializationUtil.deserialize("info.txt");
 
             System.out.println(newInfo);
