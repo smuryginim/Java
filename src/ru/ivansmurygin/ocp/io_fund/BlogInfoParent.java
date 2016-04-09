@@ -5,7 +5,7 @@ package ru.ivansmurygin.ocp.io_fund;
  */
 public class BlogInfoParent {
 
-    public BlogInfoParent(int a) {
+    public BlogInfoParent() {
         System.out.println("BlogInfoParent Created");
     }
 }

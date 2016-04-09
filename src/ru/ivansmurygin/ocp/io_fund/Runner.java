@@ -26,6 +26,29 @@ public class Runner {
         }
     }
 
+    public static void markReader() {
+        try (Reader r = new BufferedReader(new FileReader("to_read.txt"))) {
+            //to check if reader supports marking
+            if (r.markSupported()) {
+                BufferedReader in = (BufferedReader) r;
+                System.out.print(in.readLine());
+                //we put mark which will be hold for 100 characters, then it will be removed
+                in.mark(100);
+                System.out.print(in.readLine());
+                System.out.print(in.readLine());
+                //attempt to return to the mark
+                in.reset();
+                System.out.print(in.readLine());
+                in.reset();
+                System.out.println(in.readLine());
+            }else{
+                System.out.println("Mark Not Supported");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void dataOutputStream(){
         ReadWriteUtils.writeSequence("stream.data", 3);
         ReadWriteUtils.readSequence("stream.data", 3);

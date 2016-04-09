@@ -1,5 +1,6 @@
 package ru.ivansmurygin.ocp.io_fund;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -14,19 +15,34 @@ public class BlogInfo extends BlogInfoParent implements Serializable {
     String articleName;
     transient String description;
     static String imstatic;
+    transient BlogProperty[] blogProperties = new BlogProperty[1];
 
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeDouble(blogProperties[0].getDoubleProp());
+        out.writeObject(blogProperties[0].getStringProp());
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        blogProperties = new BlogProperty[1];
+        blogProperties[0] = new BlogProperty();
+        blogProperties[0].setDoubleProp(in.readDouble());
+        blogProperties[0].setStringProp((String) in.readObject());
+    };
 
     public BlogInfo() {
-        super(1);
         System.out.println("BlogInfo created");
     }
 
     public BlogInfo(Integer articleId, String articleName, String description, String imstatic) {
-        super(1);
         this.articleId = articleId;
         this.articleName = articleName;
         this.description = description;
         this.imstatic = imstatic;
+        blogProperties[0] = new BlogProperty();
+        blogProperties[0].setDoubleProp(1d);
+        blogProperties[0].setStringProp("string property");
     }
 
     @Override
@@ -35,7 +51,9 @@ public class BlogInfo extends BlogInfoParent implements Serializable {
                 "articleId=" + articleId +
                 ", articleName='" + articleName + '\'' +
                 ", description='" + description + '\'' +
-                ". imstatic='" + imstatic + '\'' +
+                ", imstatic='" + imstatic + '\'' +
+                ", blogProperty.double ='" + (blogProperties != null ? blogProperties[0].getDoubleProp() : "") + '\'' +
+                ", blogProperty.string ='" + (blogProperties != null ? blogProperties[0].getStringProp() : "") + '\'' +
                 '}';
     }
 
