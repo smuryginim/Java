@@ -1,4 +1,4 @@
-package com.smurygin.ocjp.concurency.callable;
+package ru.ivansmurygin.ocp.concurency.executor;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
