@@ -1,4 +1,4 @@
-package com.netcracker;
+package com.smurygin;
 
 import javax.jms.*;
 import javax.naming.Context;
